@@ -83,6 +83,7 @@
     <Compile Include="Objects\PrivateSettersDefaultAndOneToOneConstructor.cs" />
     <Compile Include="Objects\PrivateSettersNoConstructor.cs" />
     <Compile Include="Objects\PrivateSettersOneToOneConstructor.cs" />
+    <Compile Include="Objects\PrivateSettersPrivateOneToOneConstructor.cs" />
     <Compile Include="Objects\PublicSettersNoConstructor.cs" />
     <Compile Include="Objects\SubClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

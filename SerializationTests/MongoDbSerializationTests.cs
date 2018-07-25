@@ -268,5 +268,24 @@ namespace SerializationTests
             Assert.That(deserializedObj.SubClass, Is.Not.Null);
             Assert.That(deserializedObj.SubClass.Name, Is.EqualTo(obj.SubClass.Name));
         }
+
+        [Test]
+        public void SerializePrivateSettersPrivateOneToOneConstructor()
+        {
+            var obj = PrivateSettersPrivateOneToOneConstructor.Create(
+                Guid.NewGuid().ToString(),
+                43,
+                new List<double> {0.3, -20.3, 321.2},
+                new SubClass {Name = "Hello, world!"});
+            var collection = database.GetCollection<PrivateSettersPrivateOneToOneConstructor>(nameof(PrivateSettersPrivateOneToOneConstructor));
+            collection.InsertOne(obj);
+            var deserializedObj = collection.Find(x => x.Id == obj.Id).FirstOrDefault();
+            Assert.That(deserializedObj, Is.Not.Null);
+            Assert.That(deserializedObj.Id, Is.EqualTo(obj.Id));
+            Assert.That(deserializedObj.Number, Is.EqualTo(obj.Number));
+            CollectionAssert.AreEqual(obj.Values, deserializedObj.Values);
+            Assert.That(deserializedObj.SubClass, Is.Not.Null);
+            Assert.That(deserializedObj.SubClass.Name, Is.EqualTo(obj.SubClass.Name));
+        }
     }
 }
