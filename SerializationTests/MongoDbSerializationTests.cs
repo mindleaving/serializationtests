@@ -118,6 +118,25 @@ namespace SerializationTests
         }
 
         [Test]
+        public void SerializePartialSettersPartialConstructorAtLeastPrivateSetter()
+        {
+            var obj = new PartialSettersPartialConstructorAtLeastPrivateSetter(43, new SubClass { Name = "Hello, world!" })
+            {
+                Id = Guid.NewGuid().ToString(),
+                Values = new List<double> { 0.3, -20.3, 321.2 }
+            };
+            var collection = database.GetCollection<PartialSettersPartialConstructorAtLeastPrivateSetter>(nameof(PartialSettersPartialConstructorAtLeastPrivateSetter));
+            collection.InsertOne(obj);
+            var deserializedObj = collection.Find(x => x.Id == obj.Id).FirstOrDefault();
+            Assert.That(deserializedObj, Is.Not.Null);
+            Assert.That(deserializedObj.Id, Is.EqualTo(obj.Id));
+            Assert.That(deserializedObj.Number, Is.EqualTo(obj.Number));
+            CollectionAssert.AreEqual(obj.Values, deserializedObj.Values);
+            Assert.That(deserializedObj.SubClass, Is.Not.Null);
+            Assert.That(deserializedObj.SubClass.Name, Is.EqualTo(obj.SubClass.Name));
+        }
+
+        [Test]
         public void SerializePartialSettersPartialConstructorWithBsonAttribute()
         {
             var obj = new PartialSettersPartialConstructorWithBsonAttribute(43, new SubClass { Name = "Hello, world!" })
@@ -145,6 +164,25 @@ namespace SerializationTests
                 new List<double> {0.3, -20.3, 321.2},
                 new SubClass {Name = "Hello, world!"});
             var collection = database.GetCollection<NoSettersOneToOneConstructor>(nameof(NoSettersOneToOneConstructor));
+            collection.InsertOne(obj);
+            var deserializedObj = collection.Find(x => x.Id == obj.Id).FirstOrDefault();
+            Assert.That(deserializedObj, Is.Not.Null);
+            Assert.That(deserializedObj.Id, Is.EqualTo(obj.Id));
+            Assert.That(deserializedObj.Number, Is.EqualTo(obj.Number));
+            CollectionAssert.AreEqual(obj.Values, deserializedObj.Values);
+            Assert.That(deserializedObj.SubClass, Is.Not.Null);
+            Assert.That(deserializedObj.SubClass.Name, Is.EqualTo(obj.SubClass.Name));
+        }
+
+        [Test]
+        public void SerializeNoSettersOneToOneConstructorAndPartialConstructor()
+        {
+            var obj = new NoSettersOneToOneConstructorAndPartialConstructor(
+                Guid.NewGuid().ToString(),
+                43,
+                new List<double> {0.3, -20.3, 321.2},
+                new SubClass {Name = "Hello, world!"});
+            var collection = database.GetCollection<NoSettersOneToOneConstructorAndPartialConstructor>(nameof(NoSettersOneToOneConstructorAndPartialConstructor));
             collection.InsertOne(obj);
             var deserializedObj = collection.Find(x => x.Id == obj.Id).FirstOrDefault();
             Assert.That(deserializedObj, Is.Not.Null);

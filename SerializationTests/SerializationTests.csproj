@@ -75,9 +75,11 @@
     <Compile Include="Objects\NoSettersDefaultAndOneToOneConstructorWithBsonAttribute.cs" />
     <Compile Include="Objects\NoSettersDefaultAndOneToOneConstructorWithJsonAttribute.cs" />
     <Compile Include="Objects\NoSettersOneToOneConstructor.cs" />
+    <Compile Include="Objects\NoSettersOneToOneConstructorAndPartialConstructor.cs" />
     <Compile Include="Objects\NoSettersPrivateOneToOneConstructor.cs" />
     <Compile Include="Objects\NoSettersPrivateOneToOneConstructorWithAttribute.cs" />
     <Compile Include="Objects\PartialSettersPartialConstructor.cs" />
+    <Compile Include="Objects\PartialSettersPartialConstructorAtLeastPrivateSetter.cs" />
     <Compile Include="Objects\PartialSettersPartialConstructorWithBsonAttribute.cs" />
     <Compile Include="Objects\PrivatePropertiesNoConstructor.cs" />
     <Compile Include="Objects\PrivateSettersDefaultAndOneToOneConstructor.cs" />
